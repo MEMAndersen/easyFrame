@@ -20,19 +20,7 @@ class Frame:
     def create_mesh(self):
         mesh = Mesh(self.nodes, self.connectivity, self.el_types)
 
-    def stiffness_matrix(self):
-        # number of elements
-        nel = np.size(self.mesh.T)
+    def line(self, ):
 
-    def beam(self, L, E, I):
-        return Beam(, x2, E, I)
-
-class Beam:
-    def __init__(self):
-        # Geometry definitions
-        self.nodes = np.array()
-        self.connectivity = np.array()
-        self.elTypes = ()
-        self.elements = ()
 
 
