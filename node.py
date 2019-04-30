@@ -12,4 +12,4 @@ class Node:
         self.dim = 2
 
     def get_coord(self):
-        return np.array([self.x,self.y])
+        return np.array([self.x, self.y])

@@ -22,4 +22,5 @@ beam2 = Beam(n2, n3, e_module, area, moment_inertia)
 
 print(beam1.k_matrix())
 
-beam1.plot(np.array([0, 0, 0, 0, 0, 3.14]), div=100)
+beam1.plot(np.array([1, 1, 0, 1, 1, 0]), div=100)
+

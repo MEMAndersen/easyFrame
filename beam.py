@@ -5,6 +5,7 @@ beam class
 import numpy as np
 from line_int import *
 import matplotlib.pyplot as plt
+import unittest
 
 
 class Beam:
@@ -129,19 +130,17 @@ class Beam:
         for i in range(div):
             xyz_v[i, :] = self.n_matrix(xl[i]).dot(v).dot(t_node)
 
-        print(xyz)
         plt.plot(xyz[:, 0], xyz[:, 1])
         plt.plot(xyz[:, 0] + xyz_v[:, 0], xyz[:, 1] + xyz_v[:, 1])
         plt.axis('equal')
         plt.show()
 
-        """
-            def calc_strains(self, v, coords):
-                coords = np.zeros([100, 2])
-                xl = np.linspace(0, 1, coords)
-                for i in range(coords):
-                    b = self.b_matrix(xl[i])
-                    coords[i, :] = np.dot(b, v)
-        
-            def calc_stresses(self):
-        """
+
+"""
+class TestOfBeamClass(unittest.TestCase):
+    def setUp(self):
+        node1
+
+if __name__ == '__main__':
+    unittest.main()
+"""
