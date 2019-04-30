@@ -26,7 +26,7 @@ class Beam:
             self.dof = 9
 
     def get_length(self):
-        return np.linalg.norm(self.node2.coords - self.node1.coords)
+        return np.linalg.norm(self.node2.get_coord() - self.node1.get_coord())
 
     def d_matrix(self):
         return np.array([[self.e_module * self.area, 0], [0, self.e_module * self.moment_inertia]])
@@ -45,14 +45,14 @@ class Beam:
         return np.array([[n1, 0, 0, n4, 0, 0], [0, n2, n3, 0, n5, n6]])
 
     def b_matrix(self, xl):
-        L = self.length
+        le = self.length
 
-        b1 = -1 / L
-        b2 = 1 / L ** 2 * (- 6 + 12 * xl / L)
-        b3 = 1 / L ** 2 * (- 4 + 6 * xl / L)
-        b4 = 1 / L
-        b5 = 1 / L ** 2 * (6 - 12 * xl / L)
-        b6 = 1 / L ** 2 * (-2 + 6 * xl / L)
+        b1 = -1 / le
+        b2 = 1 / le ** 2 * (- 6 + 12 * xl / le)
+        b3 = 1 / le ** 2 * (- 4 + 6 * xl / le)
+        b4 = 1 / le
+        b5 = 1 / le ** 2 * (6 - 12 * xl / le)
+        b6 = 1 / le ** 2 * (-2 + 6 * xl / le)
 
         return np.array([[b1, 0, 0, b4, 0, 0], [0, b2, b3, 0, b5, b6]])
 
@@ -90,7 +90,7 @@ class Beam:
             coords : int
                 Number of integration points and weights
             """
-        n = 1 / self.length * (self.node2.coords - self.node1.coords)
+        n = 1 / self.length * (self.node2.get_coord() - self.node1.get_coord())
         nx = n[0]
         ny = n[1]
 
@@ -111,8 +111,8 @@ class Beam:
 
     def plot(self, v, local=True, div=2):
         # interpolate between nodes
-        x = np.linspace(self.node1.coords[0], self.node2.coords[0], div)
-        y = np.linspace(self.node1.coords[1], self.node2.coords[1], div)
+        x = np.linspace(self.node1.x, self.node2.x, div)
+        y = np.linspace(self.node1.y, self.node2.y, div)
         xyz = np.transpose(np.array([x, y]))
         xyz_v = np.zeros([div, self.dim])
 
