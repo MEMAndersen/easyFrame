@@ -20,7 +20,6 @@ class Frame:
     def create_mesh(self):
         mesh = Mesh(self.nodes, self.connectivity, self.el_types)
 
-    def line(self, ):
 
 
 

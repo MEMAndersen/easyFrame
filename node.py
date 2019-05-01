@@ -13,3 +13,6 @@ class Node:
 
     def get_coord(self):
         return np.array([self.x, self.y])
+
+    def plot(self, ax):
+        ax.plot(self.x, self.y, 'bo')
