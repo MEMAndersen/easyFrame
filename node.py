@@ -10,6 +10,7 @@ class Node:
         self.x = x
         self.y = y
         self.dim = 2
+        print('creating new node ({},{})'.format(self.x, self.y))
 
     def get_coord(self):
         return np.array([self.x, self.y])
