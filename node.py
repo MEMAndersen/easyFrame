@@ -10,10 +10,23 @@ class Node:
         self.x = x
         self.y = y
         self.dim = 2
+        self.support = None
+
         print('creating new node ({},{})'.format(self.x, self.y))
 
     def get_coord(self):
         return np.array([self.x, self.y])
 
     def plot(self, ax):
-        ax.plot(self.x, self.y, 'bo')
+        if self.support is None or np.all(self.support == False):
+            ax.plot(self.x, self.y, 'b.')
+        else:
+            if np.all(self.support[0] == True):
+                ax.plot(self.x, self.y, 'r>')
+            if np.all(self.support[1] == True):
+                ax.plot(self.x, self.y, 'r^')
+            if np.all(self.support[0] == True):
+                ax.plot(self.x, self.y, 'r|')
+
+    def add_support(self, directions):
+        self.support = directions

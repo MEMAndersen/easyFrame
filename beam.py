@@ -84,13 +84,8 @@ class Beam:
 
             Returns
             -------
-            xp : numpy.array of floats
-                Integration points
-            wp : numpy.array of floats
-                Weights
-            coords : int
-                Number of integration points and weights
-            """
+            transformation matrix
+        """
         n = 1 / self.length * (self.node2.get_coord() - self.node1.get_coord())
         nx = n[0]
         ny = n[1]
@@ -134,13 +129,3 @@ class Beam:
         plt.plot(xyz[:, 0] + xyz_v[:, 0], xyz[:, 1] + xyz_v[:, 1])
         plt.axis('equal')
         plt.show()
-
-
-"""
-class TestOfBeamClass(unittest.TestCase):
-    def setUp(self):
-        node1
-
-if __name__ == '__main__':
-    unittest.main()
-"""
