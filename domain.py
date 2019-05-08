@@ -139,6 +139,7 @@ class Mesh:
             self.nodes = np.append(self.nodes, line.node2)
 
 
+
 if __name__ == '__main__':
     # domain = Domain()
     #
