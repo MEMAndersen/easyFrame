@@ -56,7 +56,9 @@ class Domain:
     def create_mesh(self, h):
         mesh = Mesh(self.tol)
         for geom_object in self.geom_objects:
+            print(geom_object)
             mesh.nodes, mesh.lines = geom_object.create_mesh(mesh, h)
+        return mesh
 
     def geom_plot(self, line_style='b-'):
         fig = plt.figure()
@@ -67,6 +69,14 @@ class Domain:
             node.plot(ax)
         plt.axis('equal')
         plt.show()
+
+    def get_node_coords(self):
+        nno = np.size(self.nodes)
+        coords = np.zeros([nno, 2])
+
+        for i in range(nno):
+            coords[i,:] = self.nodes[i].get_coord()
+        return coords
 
 
 class Line:
@@ -88,6 +98,7 @@ class Line:
 
         self.node1 = node1
         self.node2 = node2
+        print('creating new line ({}), ({})'.format(node1.get_coord(),node2.get_coord()))
 
     def get_length(self):
         return np.linalg.norm(self.node2.get_coord() - self.node1.get_coord())
@@ -116,7 +127,9 @@ class Line:
         for i in range(n):
             x1 = x0 + x_step
             y1 = y0 + y_step
-            mesh.add_line(x0,y0,x1,y1)
+            mesh.add_line(x0, y0, x1, y1)
+            x0 = x1
+            y0 = y1
 
 
 class Mesh:
@@ -139,32 +152,18 @@ class Mesh:
             self.nodes = np.append(self.nodes, line.node2)
 
 
-
 if __name__ == '__main__':
-    # domain = Domain()
-    #
-    # domain.add_support(0.5, 0.5, np.array([True, False, False]))
-    # domain.add_node(4, 5)
-    #
-    # domain.add_line(0.5, 0.5, 1.0, 1.0)
-    # domain.add_line(0.5, 0.5, 1.0, 2.0)
-    # domain.add_line(1.0, 1.0, 1.0, 2.0)
-    # domain.add_line(1.0, 1.0, 4, 5)
-    # domain.add_line(2, 5, 4, 6)
-    # domain.add_line(1, 1, 4, 6)
-    #
-    # print(domain.geom_objects)
-    #
-    # print(domain.nodes)
-    #
-    # for node in domain.nodes:
-    #     print(node.x, node.y)
-    #
-    # domain.geom_plot()
+    domain = Domain()
 
-    line = Line(0, 0, 5, 5)
-    print(type(line))
-    if isinstance(line, Line):
-        print('Kage')
-    else:
-        print('wut')
+    domain.add_line(0.0, 0.0, 0.0, 1.0)
+    domain.add_line(0.0, 1.0, 1.0, 1.0)
+    domain.add_line(1.0, 1.0, 1.0, 0.0)
+
+    domain.add_support(0.0, 0.0, np.array([True, True, False]))
+    domain.add_support(1.0, 0.0, np.array([True, True, False]))
+
+    mesh_h01 = domain.create_mesh(0.1)
+
+    print(domain.get_node_coords())
+
+    domain.geom_plot()
