@@ -11,6 +11,7 @@ class Node:
         self.y = y
         self.dim = 2
         self.support = None
+        self.dofs = np.array([])
 
         print('creating new node ({},{})'.format(self.x, self.y))
 
@@ -30,3 +31,7 @@ class Node:
 
     def add_support(self, directions):
         self.support = directions
+
+    def update_dofs(self, dof_counter):
+        n = dof_counter
+        self.dofs = np.array([n, n+1, n+2])

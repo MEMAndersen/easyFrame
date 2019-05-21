@@ -9,28 +9,31 @@ import unittest
 
 
 class Beam:
-    def __init__(self, node1, node2, e_module, area, moment_inertia):
-        self.node1 = node1
-        self.node2 = node2
-        self.e_module = e_module
-        self.area = area
-        self.moment_inertia = moment_inertia
-
+    def __init__(self, line):
+        self.el_type = 'beam'
+        self.node1 = line.node1
+        self.node2 = line.node2
+        self.cross_section = line.cross_section
         self.length = self.get_length()
 
         # Determine if 2D or 3D beam
-        if node1.dim == 2:
+        if self.node1.dim == 2:
             self.dim = 2
             self.dof = 6
-        elif node1.dim == 3:
+        elif self.node1.dim == 3:
             self.dim = 3
             self.dof = 9
 
     def get_length(self):
         return np.linalg.norm(self.node2.get_coord() - self.node1.get_coord())
 
+    def get_dofs(self):
+        return np.concatenate([self.node1.dofs, self.node2.dofs])
+
     def d_matrix(self):
-        return np.array([[self.e_module * self.area, 0], [0, self.e_module * self.moment_inertia]])
+        ea = self.cross_section.get_ea()
+        ei = self.cross_section.get_ei()
+        return np.array([[ea, 0], [0, ei]])
 
     def n_matrix(self, xl):
         le = self.length
@@ -57,7 +60,7 @@ class Beam:
 
         return np.array([[b1, 0, 0, b4, 0, 0], [0, b2, b3, 0, b5, b6]])
 
-    def k_matrix(self):
+    def local_k_matrix(self):
         xp, wp, n = line_int(3, 0, self.length)
         k = np.zeros([self.dof, self.dof])
         d = self.d_matrix()
@@ -68,6 +71,13 @@ class Beam:
             k += wp[i] * b_t.dot(d).dot(b)
 
         return k
+
+    def global_k_matrix(self):
+        k = self.local_k_matrix()
+        t = self.t_matrix(typ='full')
+        t_t = np.transpose(t)
+
+        return t_t.dot(k).dot(t)
 
     def t_matrix(self, typ='full'):
         """
