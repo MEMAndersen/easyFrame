@@ -18,6 +18,18 @@ class Node:
     def get_coord(self):
         return np.array([self.x, self.y])
 
+    def get_supported_dofs(self):
+        if self.support is not None:
+            return self.dofs[self.support]
+        else:
+            return np.array([])
+
+    def is_within_tol(self, x, y, tol):
+        if abs(self.x - x) < tol and abs(self.y - y) < tol:
+            return True
+        else:
+            return False
+
     def plot(self, ax):
         if self.support is None or np.all(self.support == False):
             ax.plot(self.x, self.y, 'b.')
@@ -34,4 +46,4 @@ class Node:
 
     def update_dofs(self, dof_counter):
         n = dof_counter
-        self.dofs = np.array([n, n+1, n+2])
+        self.dofs = np.array([n, n + 1, n + 2])

@@ -115,15 +115,15 @@ class Beam:
             return np.array([[nx, ny],
                              [-ny, nx]])
 
-    def plot(self, v, local=True, div=2):
+    def plot(self, ax, v, div=1, local=False):
         # interpolate between nodes
-        x = np.linspace(self.node1.x, self.node2.x, div)
-        y = np.linspace(self.node1.y, self.node2.y, div)
+        x = np.linspace(self.node1.x, self.node2.x, div+1)
+        y = np.linspace(self.node1.y, self.node2.y, div+1)
         xyz = np.transpose(np.array([x, y]))
-        xyz_v = np.zeros([div, self.dim])
+        xyz_v = np.zeros([div+1, self.dim])
 
         # local length variable
-        xl = np.linspace(0, self.length, div)
+        xl = np.linspace(0, self.length, div+1)
 
         # convert to local deformations
         t_full = self.t_matrix()
@@ -132,10 +132,11 @@ class Beam:
 
         # compute points in local coordinates and transform back to global
         t_node = self.t_matrix('node')
-        for i in range(div):
+        for i in range(div+1):
             xyz_v[i, :] = self.n_matrix(xl[i]).dot(v).dot(t_node)
 
-        plt.plot(xyz[:, 0], xyz[:, 1])
-        plt.plot(xyz[:, 0] + xyz_v[:, 0], xyz[:, 1] + xyz_v[:, 1])
-        plt.axis('equal')
-        plt.show()
+        ax.plot(xyz[:, 0] + xyz_v[:, 0], xyz[:, 1] + xyz_v[:, 1], 'b-')
+        ax.axis('equal')
+
+if __name__ == '__main__':
+    pass
