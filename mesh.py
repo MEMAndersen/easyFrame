@@ -19,7 +19,6 @@ class Mesh:
         self.nno = 0
         self.k = np.array([])
         self.tol = tol
-        self.global_k = np.array([])
 
     def get_supported_dofs(self):
         supported_dofs = np.array([])

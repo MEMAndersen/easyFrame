@@ -46,4 +46,4 @@ class Node:
 
     def update_dofs(self, dof_counter):
         n = dof_counter
-        self.dofs = np.array([n, n + 1, n + 2])
+        self.dofs = np.array([n, n + 1, n + 2], dtype=int)
