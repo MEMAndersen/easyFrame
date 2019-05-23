@@ -15,6 +15,7 @@ class Beam:
         self.node2 = line.node2
         self.cross_section = line.cross_section
         self.length = self.get_length()
+        self.line = line
 
         # Determine if 2D or 3D beam
         if self.node1.dim == 2:
@@ -116,6 +117,11 @@ class Beam:
                              [-ny, nx]])
 
     def plot(self, ax, v, div=1, local=False):
+
+        if ax is None:
+            fig = plt.figure()
+            ax = fig.add_axes([0.10, 0.10, 0.8, 0.8])
+
         # interpolate between nodes
         x = np.linspace(self.node1.x, self.node2.x, div+1)
         y = np.linspace(self.node1.y, self.node2.y, div+1)

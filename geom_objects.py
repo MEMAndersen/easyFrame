@@ -32,10 +32,14 @@ class Line:
     def get_length(self):
         return np.linalg.norm(self.node2.get_coord() - self.node1.get_coord())
 
-    def plot(self, ax, line_style):
+    def plot(self, ax=None, line_style='b-'):
         xx = np.array([self.node1.x, self.node2.x])
         yy = np.array([self.node1.y, self.node2.y])
-        ax.plot(xx, yy, line_style)
+
+        if ax is None:
+            plt.plot(xx, yy, line_style)
+        else:
+            ax.plot(xx, yy, line_style)
 
     def create_mesh(self, mesh, h):
         le = self.get_length()
