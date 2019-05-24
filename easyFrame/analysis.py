@@ -2,10 +2,7 @@
 Analysis class
 
 """
-import numpy as np
-import matplotlib.pyplot as plt
-from node import *
-from mesh import *
+from easyFrame.mesh import *
 
 
 class LinearElastic:

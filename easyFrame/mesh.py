@@ -2,11 +2,8 @@
 Mesh class
 
 """
-import numpy as np
-import matplotlib.pyplot as plt
-from node import *
 
-from geom_objects import *
+from easyFrame.geom_objects import *
 
 
 class Mesh:
@@ -39,7 +36,7 @@ class Mesh:
         if not np.any(line.node2 == self.nodes):
             self.nodes = np.append(self.nodes, line.node2)
 
-    def plot(self, line_style='b-', ax=None):
+    def plot(self, line_style='b-', ax=None, show=False):
 
         if ax is None:
             fig = plt.figure()
@@ -51,6 +48,8 @@ class Mesh:
             node.plot(ax)
 
         plt.axis('equal')
+        if show:
+            plt.show()
 
     def generate_dofs(self):
         dof_counter = 0

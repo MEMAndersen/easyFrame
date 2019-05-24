@@ -2,12 +2,8 @@
 domain class
 
 """
-import numpy as np
-import matplotlib.pyplot as plt
-import math
-from node import *
-from mesh import *
-from geom_objects import *
+from easyFrame.mesh import *
+from easyFrame.geom_objects import *
 
 
 class Domain:
@@ -62,7 +58,7 @@ class Domain:
             mesh = geom_object.create_mesh(mesh, h)
         return mesh
 
-    def plot(self, line_style='b-'):
+    def plot(self, line_style='b-', show=False):
         fig = plt.figure()
         ax = fig.add_axes([0.10, 0.10, 0.8, 0.8])
         for geom_object in self.geom_objects:
@@ -70,6 +66,9 @@ class Domain:
         for node in self.nodes:
             node.plot(ax)
         plt.axis('equal')
+
+        if show:
+            plt.show()
 
     def get_node_coords(self):
         nno = np.size(self.nodes)

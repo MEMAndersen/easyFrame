@@ -6,7 +6,7 @@ nodes: Geometry nodes as a (x*2 or x*3 numpy array)
 connectivity:
 """
 import numpy as np
-from mesh import Mesh
+from easyFrame.mesh import Mesh
 
 
 class Frame:

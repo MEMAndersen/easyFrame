@@ -2,11 +2,8 @@
 Mesh class
 
 """
-import numpy as np
-import matplotlib.pyplot as plt
-from node import *
 
-from geom_objects import *
+from easyFrame.geom_objects import *
 
 
 class LoadCase:

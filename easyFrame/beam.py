@@ -2,10 +2,8 @@
 beam class
 
 """
-import numpy as np
-from line_int import *
+from easyFrame.line_int import *
 import matplotlib.pyplot as plt
-import unittest
 
 
 class Beam:
@@ -54,10 +52,10 @@ class Beam:
 
         b1 = -1 / le
         b2 = 1 / le ** 2 * (- 6 + 12 * xl / le)
-        b3 = 1 / le ** 2 * (- 4 + 6 * xl / le)
+        b3 = 1 / le * (- 4 + 6 * xl / le)
         b4 = 1 / le
         b5 = 1 / le ** 2 * (6 - 12 * xl / le)
-        b6 = 1 / le ** 2 * (-2 + 6 * xl / le)
+        b6 = 1 / le * (-2 + 6 * xl / le)
 
         return np.array([[b1, 0, 0, b4, 0, 0], [0, b2, b3, 0, b5, b6]])
 
@@ -123,13 +121,13 @@ class Beam:
             ax = fig.add_axes([0.10, 0.10, 0.8, 0.8])
 
         # interpolate between nodes
-        x = np.linspace(self.node1.x, self.node2.x, div+1)
-        y = np.linspace(self.node1.y, self.node2.y, div+1)
+        x = np.linspace(self.node1.x, self.node2.x, div + 1)
+        y = np.linspace(self.node1.y, self.node2.y, div + 1)
         xyz = np.transpose(np.array([x, y]))
-        xyz_v = np.zeros([div+1, self.dim])
+        xyz_v = np.zeros([div + 1, self.dim])
 
         # local length variable
-        xl = np.linspace(0, self.length, div+1)
+        xl = np.linspace(0, self.length, div + 1)
 
         # convert to local deformations
         t_full = self.t_matrix()
@@ -138,11 +136,12 @@ class Beam:
 
         # compute points in local coordinates and transform back to global
         t_node = self.t_matrix('node')
-        for i in range(div+1):
+        for i in range(div + 1):
             xyz_v[i, :] = self.n_matrix(xl[i]).dot(v).dot(t_node)
 
         ax.plot(xyz[:, 0] + xyz_v[:, 0], xyz[:, 1] + xyz_v[:, 1], 'b-')
         ax.axis('equal')
+
 
 if __name__ == '__main__':
     pass

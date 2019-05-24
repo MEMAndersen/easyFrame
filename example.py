@@ -2,16 +2,11 @@
 Example file for calling the easyFrame routines
 """
 
-import numpy as np
-from line_int import *
-from node import Node
-from geom_objects import *
-from beam import *
-from load import *
-from cross_section import *
-from analysis import *
-from material import *
-from domain import *
+from easyFrame.load import *
+from easyFrame.cross_section import *
+from easyFrame.analysis import *
+from easyFrame.material import *
+from easyFrame.domain import *
 
 area = 0.343
 moment_inertia = 0.104 * 1e-6
@@ -28,7 +23,7 @@ domain.add_support(0.0, 0.0, np.array([True, True, False]))
 domain.add_support(1.0, 0.0, np.array([True, True, False]))
 domain.plot()
 
-mesh_h0_1 = domain.create_mesh(0.1)
+mesh_h0_1 = domain.create_mesh(0.25)
 mesh_h0_1.generate_dofs()
 mesh_h0_1.plot()
 mesh_h0_1.generate_elements()
@@ -42,6 +37,6 @@ load_case_1.generate_load_vector()
 analysis = LinearElastic(mesh_h0_1, load_case_1)
 
 analysis.run_analysis()
-analysis.plot_deformed(div=10)
+analysis.plot_deformed(div=1, scale=2000)
 
 plt.show()

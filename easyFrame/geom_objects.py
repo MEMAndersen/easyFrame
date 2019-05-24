@@ -1,8 +1,6 @@
-import numpy as np
-import matplotlib.pyplot as plt
 from copy import copy
-from node import *
-from beam import *
+from easyFrame.node import *
+from easyFrame.beam import *
 import math
 
 
@@ -49,8 +47,8 @@ class Line:
         mesh.add_node(copy(self.node2))
 
         if n == 1:
-            mesh.lines = self
-            return
+            mesh.add_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y, self.cross_section, self.el_type)
+            return mesh
         else:
             x0 = self.node1.x
             y0 = self.node1.y
