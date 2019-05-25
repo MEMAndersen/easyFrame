@@ -14,7 +14,7 @@ class Domain:
 
     def add_node(self, x, y):
         for node in self.nodes:
-            if abs(node.x - x) < self.tol and abs(node.y - y) < self.tol:
+            if node.is_within_tol(x, y, self.tol):
                 print('Node already present at ({},{})'.format(x, y))
                 return node
         else:

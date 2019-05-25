@@ -22,7 +22,7 @@ class Node:
         if self.support is not None:
             return self.dofs[self.support]
         else:
-            return np.array([])
+            return np.array([], dtype=int)
 
     def is_within_tol(self, x, y, tol):
         if abs(self.x - x) < tol and abs(self.y - y) < tol:

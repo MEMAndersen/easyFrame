@@ -18,7 +18,7 @@ class Mesh:
         self.tol = tol
 
     def get_supported_dofs(self):
-        supported_dofs = np.array([])
+        supported_dofs = np.array([], dtype=int)
         for node in self.nodes:
             supported_dofs = np.append(supported_dofs, node.get_supported_dofs())
         return supported_dofs
@@ -69,4 +69,4 @@ class Mesh:
         for element in self.elements:
             element_k = element.global_k_matrix()
             element_dofs = element.get_dofs()
-            self.k[np.ix_(element_dofs, element_dofs)] = element_k
+            self.k[np.ix_(element_dofs, element_dofs)] += element_k

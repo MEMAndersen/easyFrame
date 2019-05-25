@@ -43,8 +43,8 @@ class Line:
         le = self.get_length()
         n = math.ceil(le / h)
 
-        mesh.add_node(copy(self.node1))
-        mesh.add_node(copy(self.node2))
+        mesh.add_node(self.node1)
+        mesh.add_node(self.node2)
 
         if n == 1:
             mesh.add_line(self.node1.x, self.node1.y, self.node2.x, self.node2.y, self.cross_section, self.el_type)

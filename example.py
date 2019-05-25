@@ -23,7 +23,7 @@ domain.add_support(0.0, 0.0, np.array([True, True, False]))
 domain.add_support(1.0, 0.0, np.array([True, True, False]))
 domain.plot()
 
-mesh_h0_1 = domain.create_mesh(0.25)
+mesh_h0_1 = domain.create_mesh(0.5)
 mesh_h0_1.generate_dofs()
 mesh_h0_1.plot()
 mesh_h0_1.generate_elements()
@@ -37,6 +37,6 @@ load_case_1.generate_load_vector()
 analysis = LinearElastic(mesh_h0_1, load_case_1)
 
 analysis.run_analysis()
-analysis.plot_deformed(div=1, scale=2000)
+analysis.plot_deformed(div=100, scale=1000)
 
 plt.show()
