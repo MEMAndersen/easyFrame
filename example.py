@@ -2,22 +2,41 @@
 Example file for calling the easyFrame routines
 """
 
-import numpy as np
+from easyFrame.load import *
+from easyFrame.cross_section import *
+from easyFrame.analysis import *
+from easyFrame.material import *
+from easyFrame.domain import *
 
-from line_int import *
+area = 0.343
+moment_inertia = 0.104 * 1e-6
+
+cs = CrossSection(area, moment_inertia, Steel())
+
+domain = Domain()
+
+domain.add_line(0.0, 0.0, 1.0, 0.0, el_type='beam', cross_section=cs)
+# domain.add_line(0.0, 1.0, 1.0, 1.0, el_type='beam', cross_section=cs)
+# domain.add_line(1.0, 1.0, 1.0, 0.0, el_type='beam', cross_section=cs)
+
+domain.add_support(0.0, 0.0, np.array([True, True, False]))
+domain.add_support(1.0, 0.0, np.array([True, True, False]))
+domain.plot()
+
+mesh_h0_1 = domain.create_mesh(0.5)
+mesh_h0_1.generate_dofs()
+mesh_h0_1.plot()
+mesh_h0_1.generate_elements()
+mesh_h0_1.generate_global_k()
+
+load_case_1 = LoadCase(mesh_h0_1)
+load_case_1.add_point_load(0.5, 0.0, [0, -1000, 0])
+load_case_1.generate_load_vector()
 
 
-from node import Node
-from beam import Beam
+analysis = LinearElastic(mesh_h0_1, load_case_1)
 
-n1 = Node(0, 0)
-n2 = Node(1, 1)
+analysis.run_analysis()
+analysis.plot_deformed(div=100, scale=1000)
 
-beam1 = Beam(n1, n2, 1, 1, 1)
-
-v = np.transpose(np.array([0, 1, 0, 0, 0, 0]))
-
-print(beam1.k_matrix())
-
-
-
+plt.show()
