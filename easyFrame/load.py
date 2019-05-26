@@ -24,6 +24,14 @@ class LoadCase:
         for load in self.loads:
             self.load_vector = load.apply_load(self.load_vector, self.mesh)
 
+    # def total_load(self, direction):
+    #     if direction == 'x' or direction == 1:
+    #         tl = np.sum(self.load_vector[::3])
+    #     elif direction == 'y' or direction == 2:
+    #         tl = np.sum(self.load_vector[1::3])
+    #     return tl
+
+
 
 class PointLoad:
     def __init__(self, x, y, force, local=False):

@@ -52,6 +52,12 @@ class TestSetAngleExample(unittest.TestCase):
 
         self.LE.run_analysis()
 
-    def test_v_results(self):
+    def test_deformation_results(self):
+        # Values differs from book example by a factor 10, the mistake is with the book
         res = 1e-4 * np.array([0, 0, -1.8877, -0.0031, -2.4199, 0.1456, -0.0062, -0.0396, 1.2458, 0, 0, - 0.6206])
         npt.assert_almost_equal(self.LE.v, res, decimal=8)
+
+    def test_reaction_results(self):
+        # Values differs from book example by a factor 10, the mistake is with the book
+        res = 1e3 * np.array([0.09332, 0.40668, -0.09362, 0.59362])
+        npt.assert_allclose(self.LE.r, res,rtol=1e-2)
